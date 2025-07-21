@@ -1,27 +1,69 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Creative](http://startbootstrap.com/template-overviews/creative/)
+# React + TypeScript + Vite
 
-[Creative](http://startbootstrap.com/template-overviews/creative/) is a one page creative theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Getting Started
+Currently, two official plugins are available:
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](http://startbootstrap.com/template-overviews/creative/)
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-creative.git`
-* Fork the repo
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Bugs and Issues
+## Expanding the ESLint configuration
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-creative/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/creative/).
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Creator
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Copyright and License
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-Copyright 2013-2016 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-creative/blob/gh-pages/LICENSE) license.
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
