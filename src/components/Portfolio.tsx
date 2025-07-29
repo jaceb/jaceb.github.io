@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, ExternalLink, Code, Palette, Smartphone, Star } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import Hero from './Hero.tsx';
 import Navigation from './Navigation.tsx';
 import Footer from './Footer.tsx';
@@ -10,31 +10,18 @@ interface MousePosition {
     y: number;
 }
 
-interface Project {
-    title: string;
-    description: string;
-    tech: string[];
-    image: string;
-    github: string;
-    live: string;
-    featured?: boolean;
-}
-
-
-
-interface Stat {
-    label: string;
-    value: number;
-}
-
-interface AnimatedCounterProps {
-    end: number;
-    duration?: number;
-}
+// interface Project {
+//     title: string;
+//     description: string;
+//     tech: string[];
+//     image: string;
+//     github: string;
+//     live: string;
+//     featured?: boolean;
+// }
 
 const Portfolio: React.FC = () => {
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
-    const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -44,55 +31,34 @@ const Portfolio: React.FC = () => {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
-    const projects: Project[] = [
-        {
-            title: "TBD",
-            description: "Full-stack React application with payment integration, real-time inventory, and admin dashboard.",
-            tech: ["React", "Node.js", "MongoDB", "Stripe"],
-            image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-            github: "#",
-            live: "#",
-            featured: true
-        },
-        {
-            title: "TBD",
-            description: "Collaborative project management tool with real-time updates and team communication.",
-            tech: ["React", "TypeScript", "Socket.io", "PostgreSQL"],
-            image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-            github: "#",
-            live: "#"
-        },
-        {
-            title: "TBD",
-            description: "Beautiful weather app with location-based forecasts and interactive charts.",
-            tech: ["React", "D3.js", "OpenWeather API", "Tailwind"],
-            image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
-            github: "#",
-            live: "#"
-        }
-    ];
+    // const projects: Project[] = [
+    //     {
+    //         title: "TBD",
+    //         description: "Full-stack React application with payment integration, real-time inventory, and admin dashboard.",
+    //         tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    //         image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+    //         github: "#",
+    //         live: "#",
+    //         featured: true
+    //     },
+    //     {
+    //         title: "TBD",
+    //         description: "Collaborative project management tool with real-time updates and team communication.",
+    //         tech: ["React", "TypeScript", "Socket.io", "PostgreSQL"],
+    //         image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
+    //         github: "#",
+    //         live: "#"
+    //     },
+    //     {
+    //         title: "TBD",
+    //         description: "Beautiful weather app with location-based forecasts and interactive charts.",
+    //         tech: ["React", "D3.js", "OpenWeather API", "Tailwind"],
+    //         image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
+    //         github: "#",
+    //         live: "#"
+    //     }
+    // ];
 
-
-    const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, duration = 2000 }) => {
-        const [count, setCount] = useState<number>(0);
-
-        useEffect(() => {
-            let start = 0;
-            const increment = end / (duration / 16);
-            const timer = setInterval(() => {
-                start += increment;
-                if (start >= end) {
-                    setCount(end);
-                    clearInterval(timer);
-                } else {
-                    setCount(Math.floor(start));
-                }
-            }, 16);
-            return () => clearInterval(timer);
-        }, [end, duration]);
-
-        return <span>{count}</span>;
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
